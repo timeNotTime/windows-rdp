@@ -40,7 +40,8 @@ default password : 'Area69Lab'
 12. Enjoy 
 
 Note:
-1) It will last till 6hr then you need to run it again
-2) Don't open Unity Launcher and Epic Games cuz nippa sar said xd
+1) You will get 7GB RAM RDP 
+2) It will last till 6hr (per session) then you need to run it again
+3) Don't open Unity Launcher and Epic Games cuz nippa sar said xd
 
 All credits to https://github.com/ElytrA8
