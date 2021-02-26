@@ -8,8 +8,9 @@ jobs:
     runs-on: windows-latest
 
     steps:
-    - name: Download Ngrok
+    - name: Download Ngrok and cloudflared
       run: Invoke-WebRequest https://bin.equinox.io/c/4VmDzA7iaHb/ngrok-stable-windows-amd64.zip -OutFile ngrok.zip
+    - run: Invoke-WebRequest https://github.com/cloudflare/cloudflared/releases/download/2021.2.5/cloudflared-windows-amd64.exe -OutFile cloudflared.exe
     - name: Extract Ngrok Archive
       run: Expand-Archive ngrok.zip
     - name: Auth
@@ -22,6 +23,11 @@ jobs:
     - run: Set-ItemProperty -Path 'HKLM:\System\CurrentControlSet\Control\Terminal Server\WinStations\RDP-Tcp' -name "UserAuthentication" -Value 1
     - run: Set-LocalUser -Name "runneradmin" -Password (ConvertTo-SecureString -AsPlainText "Area69Lab" -Force)
     - name: Create Tunnel, Now visit https://dashboard.ngrok.com/status/tunnels
+      if: startsWith(${{ secrets.TUNNEL }}, "ngrok")
       run: .\ngrok\ngrok.exe tcp -region=${{ secrets.REGION }} 3389
+    - name: Cloudflard Test
+      if: startsWith(${{ secrets.TUNNEL }}, "cloudflared")
+      run: .\cloudflared.exe tunnel --url tcp://0.0.0.0:3389 --logfile cloudflared.log
+      
       
     
