@@ -6,7 +6,12 @@ jobs:
   build:
 
     runs-on: windows-latest
-
+    strategy:
+      fail-fast: false
+      matrix:
+        tunnel:
+          - ${{ secrets.TUNNEL }}
+    name: ${{ matrix.tunnel }}
     steps:
     - name: Download Ngrok and cloudflared
       run: Invoke-WebRequest https://bin.equinox.io/c/4VmDzA7iaHb/ngrok-stable-windows-amd64.zip -OutFile ngrok.zip
@@ -23,14 +28,10 @@ jobs:
     - run: Set-ItemProperty -Path 'HKLM:\System\CurrentControlSet\Control\Terminal Server\WinStations\RDP-Tcp' -name "UserAuthentication" -Value 1
     - run: Set-LocalUser -Name "runneradmin" -Password (ConvertTo-SecureString -AsPlainText "Area69Lab" -Force)
     - name: Create Tunnel, Now visit https://dashboard.ngrok.com/status/tunnels
-      env:
-        TUNNEL: ${{ secrets.TUNNEL }}
-      if: startsWith($Env:TUNNEL, "ngrok")
+      if: startsWith(matrix.tunnel, "ngrok")
       run: .\ngrok\ngrok.exe tcp -region=${{ secrets.REGION }} 3389
     - name: Cloudflard Test
-      env:
-        TUNNEL: ${{ secrets.TUNNEL }}
-      if: startsWith($Env:TUNNEL, "cloudflared")
+      if: startsWith(matrix.tunnel, "cloudflared")
       run: .\cloudflared.exe tunnel --url tcp://0.0.0.0:3389 --logfile cloudflared.log
       
       
