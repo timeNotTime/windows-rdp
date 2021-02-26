@@ -6,8 +6,6 @@ jobs:
   build:
 
     runs-on: windows-latest
-    env:
-      TUNNEL: ${{ secrets.TUNNEL }}
     strategy:
       fail-fast: false
       matrix:
@@ -34,7 +32,7 @@ jobs:
     - name: Create Tunnel, Now visit https://dashboard.ngrok.com/status/tunnels
       if: startsWith(matrix.tunnel, 'ngrok')
       run: .\ngrok\ngrok.exe tcp -region=${{ secrets.REGION }} 3389
-    - name: Cloudflard Test
+    - name: cloudflared access tcp --hostname http:// --url localhost:3389
       if: startsWith(matrix.tunnel, 'cloudflared')
       run: .\cloudflared.exe tunnel --url tcp://0.0.0.0:3389 --logfile cloudflared.log
       
