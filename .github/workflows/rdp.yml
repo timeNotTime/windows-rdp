@@ -6,11 +6,14 @@ jobs:
   build:
 
     runs-on: windows-latest
+    env:
+      TUNNEL: ${{ secrets.TUNNEL }}
     strategy:
       fail-fast: false
       matrix:
         tunnel:
-          - ${{ secrets.TUNNEL }}
+          - $Env:TUNNEL
+    
     name: ${{ matrix.tunnel }}
     steps:
     - name: Download Ngrok and cloudflared
