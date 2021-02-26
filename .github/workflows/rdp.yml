@@ -22,6 +22,6 @@ jobs:
     - run: Set-ItemProperty -Path 'HKLM:\System\CurrentControlSet\Control\Terminal Server\WinStations\RDP-Tcp' -name "UserAuthentication" -Value 1
     - run: Set-LocalUser -Name "runneradmin" -Password (ConvertTo-SecureString -AsPlainText "Area69Lab" -Force)
     - name: Create Tunnel, Now visit https://dashboard.ngrok.com/status/tunnels
-      run: .\ngrok\ngrok.exe tcp -region=$Env:__REGION 3389
+      run: .\ngrok\ngrok.exe tcp -region=${{ secrets.REGION }} 3389
       
     
