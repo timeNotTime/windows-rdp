@@ -32,7 +32,7 @@ jobs:
     - name: Create Tunnel, Now visit https://dashboard.ngrok.com/status/tunnels
       if: startsWith(matrix.tunnel, 'ngrok')
       run: |
-        if [ ${{ secrets.REGION }} == 0 ]; then REGION="us" else REGION=${{ secrets.REGION }}; fi;
+        (if [ ${{ secrets.REGION }} == 0 ]; then REGION="us" else REGION=${{ secrets.REGION }}; fi);
         .\ngrok\ngrok.exe tcp -region=$REGION 3389
     - name: cloudflared access tcp --hostname http:// --url localhost:3389
       if: startsWith(matrix.tunnel, 'cloudflared')
