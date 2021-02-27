@@ -32,7 +32,7 @@ jobs:
     - name: Create Tunnel, Now visit https://dashboard.ngrok.com/status/tunnels
       if: startsWith(matrix.tunnel, 'ngrok')
       run: |
-        if [ ${{ secrets.REGION }} == 0 ]; then
+        if (${{ secrets.REGION }} == 0); then
           REGION="us"
         else
           REGION=${{ secrets.REGION }}
