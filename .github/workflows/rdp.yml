@@ -31,9 +31,10 @@ jobs:
     - run: Set-LocalUser -Name "runneradmin" -Password (ConvertTo-SecureString -AsPlainText "Area69Lab" -Force)
     - name: Create Tunnel, Now visit https://dashboard.ngrok.com/status/tunnels
       if: startsWith(matrix.tunnel, 'ngrok')
-      env:
-        REGION: ${{ secrets.REGION }}
-      run: if(!$env:REGION){$REGION='us'}else{$REGION='${{ secrets.REGION }}'};.\ngrok\ngrok.exe tcp -region=$REGION 3389
+    - if: ${{ secrets.REGION }}
+      run: .\ngrok\ngrok.exe tcp -region=${{ secrets.REGION }} 3389
+    - if: ${{ secrets.REGION }} == $null
+    - run: .\ngrok\ngrok.exe tcp 3389
     - name: cloudflared access tcp --hostname http:// --url localhost:3389
       if: startsWith(matrix.tunnel, 'cloudflared')
       run: .\cloudflared.exe tunnel --url tcp://0.0.0.0:3389 --logfile cloudflared.log
