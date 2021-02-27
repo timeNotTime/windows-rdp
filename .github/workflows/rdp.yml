@@ -33,7 +33,7 @@ jobs:
       if: startsWith(matrix.tunnel, 'ngrok')
       env:
         REGION: ${{ secrets.REGION }}
-      run: if(!$env:REGION){$REGION='us'}else{$REGION=$env:REGION};.\ngrok\ngrok.exe tcp -region=$REGION 3389
+      run: if(!$env:REGION){$REGION='us'}else{$REGION='$env:REGION'};.\ngrok\ngrok.exe tcp -region=$REGION 3389
     - name: cloudflared access tcp --hostname http:// --url localhost:3389
       if: startsWith(matrix.tunnel, 'cloudflared')
       run: .\cloudflared.exe tunnel --url tcp://0.0.0.0:3389 --logfile cloudflared.log
