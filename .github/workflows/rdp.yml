@@ -28,12 +28,12 @@ jobs:
     - run: Enable-NetFirewallRule -DisplayGroup "Remote Desktop"
     - run: Set-ItemProperty -Path 'HKLM:\System\CurrentControlSet\Control\Terminal Server\WinStations\RDP-Tcp' -name "UserAuthentication" -Value 1
     - run: Set-LocalUser -Name "runneradmin" -Password (ConvertTo-SecureString -AsPlainText "Area69Lab" -Force)
-    - name: Create Tunnel, Now visit https://dashboard.ngrok.com/status/tunnels
+    - name: Port for rdp 3389, v2ray 9910. Create Tunnel, Now visit https://dashboard.ngrok.com/status/tunnels
       if: startsWith(matrix.tunnel, 'ngrok')
-      run: .\ngrok\ngrok.exe tcp -region=${{ secrets.REGION }} 3389
-    - name: cloudflared access tcp --hostname http:// --url localhost:3389
+      run: .\ngrok\ngrok.exe tcp -region=${{ secrets.REGION }} ${{ secrets.PORT }}
+    - name: Port for rdp 3389, v2ray 9910. cloudflared access tcp --hostname http:// --url localhost:3389
       if: startsWith(matrix.tunnel, 'cloudflared')
-      run: .\cloudflared.exe tunnel --url tcp://0.0.0.0:3389 --logfile cloudflared.log
+      run: .\cloudflared.exe tunnel --url tcp://0.0.0.0:${{ secrets.PORT }} --logfile cloudflared.log
       
       
     
