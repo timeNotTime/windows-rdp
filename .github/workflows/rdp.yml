@@ -32,7 +32,7 @@ jobs:
     - run: python misc.py
     - name: Port for rdp 3389, v2ray 9910. Create Tunnel, Now visit https://dashboard.ngrok.com/status/tunnels
       if: startsWith(matrix.tunnel, 'ngrok')
-      run: .\ngrok\ngrok.exe tcp -region=${{ secrets.REGION }} ${{ secrets.PORT }}
+      run: .\ngrok\ngrok.exe ${{ secrets.POTOCOL }} -region=${{ secrets.REGION }} ${{ secrets.PORT }}
     - name: Port for rdp 3389, v2ray 9910. cloudflared access tcp --hostname http:// --url localhost:3389
       if: startsWith(matrix.tunnel, 'cloudflared')
       run: .\cloudflared.exe tunnel --url tcp://0.0.0.0:${{ secrets.PORT }} --logfile cloudflared.log
