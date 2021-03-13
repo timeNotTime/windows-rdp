@@ -1,4 +1,4 @@
-import os, uuid, json, base64
+import os, uuid, json, base64, platform
 from subprocess import Popen
 from urllib.request import urlopen
 
@@ -17,7 +17,7 @@ def findPackageR(id_repo, p_name, tag_name=False, all_=False):
   
 def v2ray(id=None,port=9999):
   
-  found = findPackageR('v2fly/v2ray-core', 'v2ray-windows-64.zip', all_=True)
+  found = findPackageR('v2fly/v2ray-core', f'v2ray-{platform.system().lower()}-64.zip', all_=True)
   downUrl = found['assets']['browser_download_url']
   print(f"Installing v2ray {found['tag_name']} ...")
   os.system(f'mkdir v2raybin && cd v2raybin && curl -L -H "Cache-Control: no-cache" -o v2ray.zip {downUrl}  && unzip v2ray.zip')
