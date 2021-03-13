@@ -12,11 +12,12 @@ jobs:
         unzip ngrok.zip
         ls -la
     - name: Auth
-      run: .\ngrok authtoken $Env:NGROK_AUTH_TOKEN
+      run: ls -la
+    - run: ./ngrok authtoken $Env:NGROK_AUTH_TOKEN
       env:
           NGROK_AUTH_TOKEN: ${{ secrets.NGROK_AUTH_TOKEN }}
     - name: Create Tunnel, Now visit https://dashboard.ngrok.com/status/tunnels
-      run: .\ngrok http -region=us 8081
+      run: ./ngrok http -region=us 8081
     - uses: actions/checkout@v2
     - uses: ./.github/actions/my-action
     - uses: docker://sorokine/docker-colab-local:latest
