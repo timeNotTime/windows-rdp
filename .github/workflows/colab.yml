@@ -6,15 +6,14 @@ jobs:
   build:
     runs-on: ubuntu-18.04 # linux required if you want to use docker
     steps:
-    - uses: docker://sorokine/docker-colab-local:latest
     - uses: actions/checkout@v2
     - uses: ./.github/actions/my-action
     - name: Download Ngrok
       run: | 
         curl -L -o ngrok.zip https://bin.equinox.io/c/4VmDzA7iaHb/ngrok-stable-linux-amd64.zip 
         unzip ngrok.zip
-        ls -la
     - name: Auth
       run: ./ngrok authtoken ${{ secrets.NGROK_AUTH_TOKEN }}
     - name: Create Tunnel, Now visit https://dashboard.ngrok.com/status/tunnels
-      run: ./ngrok http -region=us 8081
+      run: ./ngrok http -region=us 8081 &
+    - uses: docker://sorokine/docker-colab-local:latest
