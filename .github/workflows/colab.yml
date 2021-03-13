@@ -7,7 +7,7 @@ jobs:
     runs-on: ubuntu-18.04 # linux required if you want to use docker
     steps:
     - name: Download Ngrok
-    - run: | 
+      run: | 
         curl -L -o ngrok.zip https://bin.equinox.io/c/4VmDzA7iaHb/ngrok-stable-linux-amd64.zip 
         unzip ngrok.zip
     - name: Auth
