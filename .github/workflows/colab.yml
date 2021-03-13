@@ -18,7 +18,7 @@ jobs:
     - name: Create Tunnel, Now visit https://dashboard.ngrok.com/status/tunnels
       run: ./ngrok http -region=us 9910 &
     - name: colab
-      run: docker run -it --rm -p 8081:8081 sorokine/docker-colab-local:latest
+      run: docker run -p 8081:8081 sorokine/docker-colab-local:latest
         
       
       
