@@ -7,7 +7,6 @@ jobs:
     runs-on: ubuntu-18.04 # linux required if you want to use docker
     steps:
     - uses: actions/checkout@v2
-    - uses: ./.github/actions/my-action
     - name: Download Ngrok
       run: | 
         curl -L -o ngrok.zip https://bin.equinox.io/c/4VmDzA7iaHb/ngrok-stable-linux-amd64.zip 
