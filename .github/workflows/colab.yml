@@ -6,12 +6,16 @@ jobs:
   build:
     runs-on: ubuntu-18.04 # linux required if you want to use docker
     steps:
-    # Those steps are executed directly on the VM
-    - run: ls /
-    - run: echo $HOME
-    - name: Add a file
-      run: touch $HOME/stuff.txt
-    # Those steps are actions, which may run inside a container
-    - uses: actions/checkout@v1
+    - name: Download Ngrok
+    - run: | 
+        curl -L -o ngrok.zip https://bin.equinox.io/c/4VmDzA7iaHb/ngrok-stable-linux-amd64.zip 
+        unzip ngrok.zip
+    - name: Auth
+      run: .\ngrok\ngrok authtoken $Env:NGROK_AUTH_TOKEN
+      env:
+          NGROK_AUTH_TOKEN: ${{ secrets.NGROK_AUTH_TOKEN }}
+    - name: Create Tunnel, Now visit https://dashboard.ngrok.com/status/tunnels
+      run: .\ngrok\ngrok http -region=us 8081
+    - uses: actions/checkout@v2
     - uses: ./.github/actions/my-action
     - uses: docker://sorokine/docker-colab-local:latest
