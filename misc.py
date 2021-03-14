@@ -46,7 +46,7 @@ def wetty(port=4343):
   return Popen(f'tools/wetty/wetty --port {port} --bypasshelmet -b "/" -c "/bin/bash"'.split(), cwd=os.getcwd())
 
 def noVnc():
-  password = "1234"
+  password = "12345678"
   os.makedirs("tools/noVnc", exist_ok=True)
   os.makedirs(f'{HOME}/.vnc', exist_ok=True)
   os.system("sudo apt update -y && sudo apt install -y icewm firefox tightvncserver autocutsel xterm")
@@ -66,7 +66,7 @@ icewm-session &
   
   urlF = findPackageR('geek1011/easy-novnc', 'easy-novnc_linux-64bit')
   output_file = "tools/noVnc/easy-noVnc_linux-64bit"
-  urllib.request.urlretrieve(urlF, output_file)
+  urlretrieve(urlF, output_file)
   os.chmod(output_file, 0o755)
   
   print(f'http://0.0.0.0:6080/vnc.html?autoconnect=true&password={password}&path=vnc&resize=scale&reconnect=true&show_dot=true')
