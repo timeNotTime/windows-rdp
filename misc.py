@@ -3,6 +3,8 @@ from subprocess import Popen
 from urllib.request import urlopen
 from urllib.request import urlretrieve
 
+HOME = os.path.expanduser("~")
+
 #v2ray
 def findPackageR(id_repo, p_name, tag_name=False, all_=False):
   for rawData in json.load(urlopen(f"https://api.github.com/repos/{id_repo}/releases")):
@@ -43,6 +45,33 @@ def wetty(port=4343):
   os.remove(fileSN)
   return Popen(f'tools/wetty/wetty --port {port} --bypasshelmet -b "/" -c "/bin/bash"'.split(), cwd=os.getcwd())
 
+def noVnc():
+  password = "1234"
+  os.makedirs("tools/noVnc", exist_ok=True)
+  os.makedirs(f'{HOME}/.vnc', exist_ok=True)
+  os.system("sudo apt update -y && sudo apt install -y icewm firefox tightvncserver autocutsel xterm")
+  os.system('echo "{password}" | vncpasswd -f > ~/.vnc/passwd')
+  data = """
+#!/bin/bash
+xrdb $HOME/.Xresources
+xsetroot -solid black -cursor_name left_ptr
+autocutsel -fork
+icewm-session &
+"""
+  with open(f'{HOME}/.vnc/xstartup', 'w+') as wNow:
+    wNow.write(data)
+  os.chmod(f'{HOME}/.vnc/xstartup', 0o755)
+  os.chmod(f'{HOME}/.vnc/passwd', 0o400)
+  Popen('sudo vncserver :1 -geometry 1440x870 -economictranslate -dontdisconnect')
+  
+  urlF = findPackageR('geek1011/easy-novnc', 'easy-novnc_linux-64bit')
+  output_file = "tools/noVnc/easy-noVnc_linux-64bit"
+  urllib.request.urlretrieve(urlF, output_file)
+  os.chmod(output_file, 0o755)
+  
+  print(f'http://0.0.0.0:6080/vnc.html?autoconnect=true&password={password}&path=vnc&resize=scale&reconnect=true&show_dot=true')
+  return Popen("./easy-noVnc_linux-64bit --addr 0.0.0.0:6080 --port 5901", cwd="tools/noVnc/")      
+
 ID = str(uuid.uuid4())
 print("Setting up v2ray server ... ")
 v2ray(ID, 9910)
@@ -50,4 +79,7 @@ v2ray(ID, 9910)
 if platform.system() == "Linux":
   print("Installing wetty ...")
   wetty()
+        
+  print("Setting up noVnc ...")
+  noVnc()
 
