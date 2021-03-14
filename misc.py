@@ -76,10 +76,10 @@ ID = str(uuid.uuid4())
 print("Setting up v2ray server ... ")
 v2ray(ID, 9910)
 
-if platform.system() == "Linux":
-  print("Installing wetty ...")
-  wetty()
+# if platform.system() == "Linux":
+#   print("Installing wetty ...")
+#   wetty()
         
-  print("Setting up noVnc ...")
-  noVnc()
+#   print("Setting up noVnc ...")
+#   noVnc()
 
