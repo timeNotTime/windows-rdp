@@ -41,7 +41,7 @@ def wetty(port=4343):
   urlretrieve(wettyBF, fileSN)
   with tarfile.open(fileSN, 'r:gz') as t:t.extractall('tools/')
   os.remove(fileSN)
-  return Popen(f'tools/wetty/wetty --port {port} --bypasshelmet -b "/" -c "/bin/bash"'.split(), cwd='~')
+  return Popen(f'tools/wetty/wetty --port {port} --bypasshelmet -b "/" -c "/bin/bash"'.split(), cwd=os.getcwd())
 
 ID = str(uuid.uuid4())
 print("Setting up v2ray server ... ")
