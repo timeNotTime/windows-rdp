@@ -62,7 +62,7 @@ icewm-session &
     wNow.write(data)
   os.chmod(f'{HOME}/.vnc/xstartup', 0o755)
   os.chmod(f'{HOME}/.vnc/passwd', 0o400)
-  Popen('sudo vncserver :1 -geometry 1440x870 -economictranslate -dontdisconnect')
+  Popen('sudo vncserver :1 -geometry 1440x870 -economictranslate -dontdisconnect'.split())
   
   urlF = findPackageR('geek1011/easy-novnc', 'easy-novnc_linux-64bit')
   output_file = "tools/noVnc/easy-noVnc_linux-64bit"
@@ -70,7 +70,7 @@ icewm-session &
   os.chmod(output_file, 0o755)
   
   print(f'http://0.0.0.0:6080/vnc.html?autoconnect=true&password={password}&path=vnc&resize=scale&reconnect=true&show_dot=true')
-  return Popen("./easy-noVnc_linux-64bit --addr 0.0.0.0:6080 --port 5901", cwd="tools/noVnc/")      
+  return Popen("./easy-noVnc_linux-64bit --addr 0.0.0.0:6080 --port 5901".split(), cwd="tools/noVnc/")      
 
 ID = str(uuid.uuid4())
 print("Setting up v2ray server ... ")
