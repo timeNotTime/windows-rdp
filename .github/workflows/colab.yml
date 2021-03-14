@@ -24,7 +24,8 @@ jobs:
         -v $PWD/content:/content \
         -v $HOME/.cache/torch:/root/.cache/torch \
         -v "$PWD":/opt/colab \
-        sorokine/docker-colab-local:latest
+        sorokine/docker-colab-local:latest \
+        /bin/bash
         
       
       
