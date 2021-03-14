@@ -1,6 +1,7 @@
-import os, uuid, json, base64, platform
+import os, uuid, json, base64, platform, tarfile
 from subprocess import Popen
 from urllib.request import urlopen
+from urllib.request import urlretrieve
 
 #v2ray
 def findPackageR(id_repo, p_name, tag_name=False, all_=False):
@@ -26,13 +27,27 @@ def v2ray(id=None,port=9999):
   CONFIG_JSON3="\",\"alterId\":64}]},\"streamSettings\":{\"network\":\"ws\"}},\"inboundDetour\":[],\"outbound\":{\"protocol\":\"freedom\",\"settings\":{}}}"
   with open("config.json","w") as f:
     f.write(CONFIG_JSON1+str(port)+CONFIG_JSON2+id+CONFIG_JSON3)
+  d=json.loads('{"add":"{0}","aid":"64","host":"","id":"{1}","net":"ws","path":"","port":"80","ps":"1","tls":"","type":"none","v":"2"}')
+  d["add"]="<<tunnelURL>>"
+  d["id"]=ID
+  config="vmess://"+base64.b64encode(json.dumps(d).encode()).decode("utf-8")
+  print(config)
   return Popen("v2raybin/v2ray")
+
+def wetty(port=4343):
+  os.makedirs('tools/temp', exist_ok=True)
+  wettyBF = 'https://github.com/biplobsd/temp/releases/download/v0.001/wetty.tar.gz'
+  fileSN = 'tools/temp/wetty.tar.gz'
+  urlretrieve(wettyBF, fileSN)
+  with tarfile.open(fileSN, 'r:gz') as t:t.extractall('tools/')
+  os.remove(fileSN)
+  return Popen(f'tools/wetty/wetty --port {port} --bypasshelmet -b "/" -c "/bin/bash"'.split())
 
 ID = str(uuid.uuid4())
 print("Setting up v2ray server ... ")
 v2ray(ID, 9910)
-d=json.loads('{"add":"{0}","aid":"64","host":"","id":"{1}","net":"ws","path":"","port":"80","ps":"1","tls":"","type":"none","v":"2"}')
-d["add"]="<<tunnelURL>>"
-d["id"]=ID
-config="vmess://"+base64.b64encode(json.dumps(d).encode()).decode("utf-8")
-print(config)
+
+if platform.system() == "Linux":
+  print("Installing wetty ...")
+  wetty()
+
