@@ -23,6 +23,7 @@ jobs:
         sudo mkdir -p /var/run/sshd
         echo "PermitRootLogin yes" >> sudo /etc/ssh/sshd_config
         echo "PasswordAuthentication yes" >> sudo /etc/ssh/sshd_config
+        cat /etc/ssh/sshd_config
         sudo /usr/sbin/sshd -D &
         df -h
         mkdir content
