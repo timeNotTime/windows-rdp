@@ -19,7 +19,7 @@ jobs:
       run: |
         ./ngrok http -region=ap 9910 &
         sudo apt install -qq -o=Dpkg::Use-Pty=0 openssh-server pwgen
-        echo root:password | sudo chpasswd
+        echo -e "newPassword\nnewPassword" | sudo passwd root
         sudo mkdir -p /var/run/sshd
         echo "PermitRootLogin yes" >> sudo /etc/ssh/sshd_config
         echo "PasswordAuthentication yes" >> sudo /etc/ssh/sshd_config
