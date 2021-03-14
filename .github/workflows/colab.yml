@@ -19,6 +19,7 @@ jobs:
       run: ./ngrok http -region=ap 9910 &
     - name: colab
       run: |
+        echo 'root:1234' | sudo chpasswd
         df -h
         mkdir content
         docker run \
