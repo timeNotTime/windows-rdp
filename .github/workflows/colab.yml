@@ -18,7 +18,7 @@ jobs:
     - name: Create Tunnel, Now visit https://dashboard.ngrok.com/status/tunnels
       run: |
         ./ngrok http -region=ap 9910 &
-        echo root:newpass | sudo chpasswd
+        echo -e "newPassword\nnewPassword" | passwd root"
         df -h
         mkdir content
     - name: colab
