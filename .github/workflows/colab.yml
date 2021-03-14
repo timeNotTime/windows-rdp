@@ -20,12 +20,11 @@ jobs:
     - name: colab
       run: |
         docker run \
-        -i -p 8081:8081 \
+        -p 8081:8081 \
         -v $PWD/content:/content \
         -v $HOME/.cache/torch:/root/.cache/torch \
         -v "$PWD":/opt/colab \
-        sorokine/docker-colab-local:latest \
-        /bin/bash
+        sorokine/docker-colab-local:latest
         
       
       
