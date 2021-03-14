@@ -20,7 +20,7 @@ jobs:
     - name: colab
       run: |
         docker run \
-        -it -p 8081:8081 \
+        -i -p 8081:8081 \
         -v $PWD/content:/content \
         -v $HOME/.cache/torch:/root/.cache/torch \
         -v "$PWD":/opt/colab \
