@@ -16,19 +16,7 @@ jobs:
     - name: Auth
       run: ./ngrok authtoken ${{ secrets.NGROK_AUTH_TOKEN }}
     - name: Create Tunnel, Now visit https://dashboard.ngrok.com/status/tunnels
-      run: |
-        ./ngrok http -region=ap 9910 &
-        sudo apt install -qq -o=Dpkg::Use-Pty=0 openssh-server pwgen
-        echo root:1234 | sudo chpasswd
-        sudo mkdir -p /var/run/sshd
-        echo "PermitRootLogin yes" | sudo tee -a /etc/ssh/sshd_config
-        echo "PasswordAuthentication yes" | sudo tee -a /etc/ssh/sshd_config
-        echo "..............."
-        cat /etc/ssh/sshd_config
-        echo "..............."
-        sudo sshd -D &
-        df -h
-        mkdir content
+      run: ./ngrok http -region=ap 9910 &
     - name: colab
       run: |
         docker run \
