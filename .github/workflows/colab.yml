@@ -21,8 +21,8 @@ jobs:
         sudo apt install -qq -o=Dpkg::Use-Pty=0 openssh-server pwgen
         echo root:password | sudo chpasswd
         sudo mkdir -p /var/run/sshd
-        sudo echo "PermitRootLogin yes" >> /etc/ssh/sshd_config
-        sudo echo "PasswordAuthentication yes" >> /etc/ssh/sshd_config
+        echo "PermitRootLogin yes" >> sudo /etc/ssh/sshd_config
+        echo "PasswordAuthentication yes" >> sudo /etc/ssh/sshd_config
         sudo /usr/sbin/sshd -D &
         df -h
         mkdir content
