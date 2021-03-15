@@ -20,16 +20,18 @@ jobs:
     - name: colab
 #       run: sudo apt-get update && sudo apt-get -y dist-upgrade
       run: sudo apt-get install -y python3 python3-pip
-    - run: pip3 --no-cache-dir install --upgrade pip setuptools
+    - run: sudo update-alternatives --install /usr/bin/python python /usr/bin/python3
+    - run: python -m "pip --no-cache-dir install --upgrade pip setuptools"
     - run: sudo mkdir -p /content
     - name: Installing require packages
-      working-directory: /content
       run: |
-        pip3 install jupyterlab jupyter_http_over_ws ipywidgets https://github.com/googlecolab/colabtools/archive/main.zip \
+        python -m "pip install jupyterlab jupyter_http_over_ws ipywidgets https://github.com/googlecolab/colabtools/archive/main.zip" \
         && jupyter serverextension enable --py jupyter_http_over_ws \
         && jupyter nbextension enable --py widgetsnbextension
-    - run: pip3 install pytorch-pretrained-bert sklearn transformers matplotlib
-    - run: pip3 install annoy
+    - run: python -m "pip install pytorch-pretrained-bert sklearn transformers matplotlib"
+    - run: python -m "pip install annoy"
+    - run: chsh -s /bin/bash $USER
+      working-directory: /content
     - run: jupyter notebook --NotebookApp.allow_origin='https://colab.research.google.com' --allow-root --port 8081 --NotebookApp.port_retries=0 --ip 0.0.0.0
 
 
