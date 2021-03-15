@@ -30,8 +30,7 @@ jobs:
         && jupyter nbextension enable --py widgetsnbextension
 #     - run: python -m pip install pytorch-pretrained-bert sklearn transformers matplotlib
     - run: python -m pip install annoy
-      working-directory: /content
-    - run: SHELL=/bin/bash jupyter notebook --NotebookApp.allow_origin='https://colab.research.google.com' --allow-root --port 8081 --NotebookApp.port_retries=0 --ip 0.0.0.0
+    - run: cd /content && sudo jupyter notebook --NotebookApp.allow_origin='https://colab.research.google.com' --allow-root --port 8081 --NotebookApp.port_retries=0 --ip 0.0.0.0
 
 
     
