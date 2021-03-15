@@ -18,7 +18,7 @@ jobs:
     - name: Create Tunnel, Now visit https://dashboard.ngrok.com/status/tunnels
       run: ./ngrok http -region=ap 9910 &
     - name: colab
-      run: sudo apt-get update && sudo apt-get -y dist-upgrade
+#       run: sudo apt-get update && sudo apt-get -y dist-upgrade
     - run: sudo apt-get install -y python3 python3-pip
     - run: pip3 --no-cache-dir install --upgrade pip setuptools
     - run: mkdir -p /content
