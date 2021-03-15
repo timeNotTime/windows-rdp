@@ -18,13 +18,29 @@ jobs:
     - name: Create Tunnel, Now visit https://dashboard.ngrok.com/status/tunnels
       run: ./ngrok http -region=ap 9910 &
     - name: colab
+      run: apt-get update && apt-get -y dist-upgrade
+    - run: apt-get install -y python3 python3-pip
+    - run: pip3 --no-cache-dir install --upgrade pip setuptools
+    - run: mkdir -p /content
+    - name: Installing require packages
+      working-directory: /content
       run: |
-        docker run \
-        -p 8081:8081 \
-        -v $PWD/content:/content \
-        -v $HOME/.cache/torch:/root/.cache/torch \
-        -v "$PWD":/opt/colab \
-        sorokine/docker-colab-local:latest
+        pip3 install jupyterlab jupyter_http_over_ws ipywidgets https://github.com/googlecolab/colabtools/archive/main.zip \
+        && jupyter serverextension enable --py jupyter_http_over_ws \
+        && jupyter nbextension enable --py widgetsnbextension
+    - run: pip3 install pytorch-pretrained-bert sklearn transformers matplotlib
+    - run: pip3 install annoy
+    - run: jupyter notebook --NotebookApp.allow_origin='https://colab.research.google.com' --allow-root --port 8081 --NotebookApp.port_retries=0 --ip 0.0.0.0
+
+
+    
+#       run: |
+#         docker run \
+#         -p 8081:8081 \
+#         -v $PWD/content:/content \
+#         -v $HOME/.cache/torch:/root/.cache/torch \
+#         -v "$PWD":/opt/colab \
+#         sorokine/docker-colab-local:latest
         
       
       
