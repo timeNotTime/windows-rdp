@@ -21,7 +21,7 @@ jobs:
 #       run: sudo apt-get update && sudo apt-get -y dist-upgrade
       run: sudo apt-get install -y python3 python3-pip
     - run: pip3 --no-cache-dir install --upgrade pip setuptools
-    - run: mkdir -p /content
+    - run: sudo mkdir -p /content
     - name: Installing require packages
       working-directory: /content
       run: |
