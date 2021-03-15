@@ -32,7 +32,7 @@ jobs:
 #     - run: python -m pip install pytorch-pretrained-bert sklearn transformers matplotlib
     - run: python -m pip install annoy
     - run: sudo ln -sf /bin/bash /bin/sh #Forcely change shell
-    - run: cd /content && sudo PATH=$PATH $(which jupyter) notebook --NotebookApp.allow_origin='https://colab.research.google.com' --allow-root --port 8081 --NotebookApp.port_retries=0 --ip 0.0.0.0
+    - run: cd /content && sudo jupyter notebook --NotebookApp.allow_origin='https://colab.research.google.com' --allow-root --port 8081 --NotebookApp.port_retries=0 --ip 0.0.0.0
 
 
     
